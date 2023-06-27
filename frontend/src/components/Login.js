@@ -1,4 +1,6 @@
 import * as React from 'react';
+import Toolbar from '@mui/material/Toolbar';
+import HomeIcon from '@mui/icons-material/Home';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +17,13 @@ import Typography from '@mui/material/Typography';
 function Login() {
   return (
     <>
+     <Toolbar>
+        <Button>
+          <Link to='/'>
+            <HomeIcon sx={{ mr: 2 }} />
+          </Link>
+        </Button>
+      </Toolbar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid

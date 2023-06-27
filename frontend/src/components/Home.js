@@ -11,6 +11,12 @@ function Home() {
       </Button><br/>
       <Button>
         <Link to='/login'>Login</Link>
+      </Button><br/>
+      <Button>
+        <Link to='/checkout'>Checkout</Link>
+      </Button><br/>
+      <Button>
+        <Link to='/products'>Products</Link>
       </Button>
     </>
   )

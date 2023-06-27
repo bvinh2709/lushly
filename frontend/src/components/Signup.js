@@ -1,5 +1,7 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
+import Toolbar from '@mui/material/Toolbar';
+import HomeIcon from '@mui/icons-material/Home';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -13,6 +15,13 @@ function Signup() {
   return ( 
 
     <>
+      <Toolbar>
+        <Button>
+          <Link to='/'>
+            <HomeIcon sx={{ mr: 2 }} />
+          </Link>
+        </Button>
+      </Toolbar>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box

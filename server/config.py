@@ -8,7 +8,8 @@ app = Flask(__name__)
 load_dotenv()
 
 app.config['SECRET_KEY'] = '85e1dfe6b7'
-app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+# app.config['MONGO_URI'] = os.getenv('MONGO_URI')
+app.config['MONGO_URI'] = 'mongodb+srv://lushly:lushly123@cluster0.hggfvko.mongodb.net/lushly?retryWrites=true&w=majority'
 
 mongo = PyMongo(app)
 

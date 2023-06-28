@@ -42,7 +42,7 @@ export default function Album() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {products.map((product) => (
-              <Grid item key={product} xs={12} sm={6} md={4}>
+              <Grid item key={product.name} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -52,13 +52,13 @@ export default function Album() {
                       // 16:9
                       pt: '56.25%',
                     }} />
-                    <img alt='company' src={lushly} />
+                    <img alt='company' src={product.image} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      Product
+                      {product.name}
                     </Typography>
                     <Typography>
-                      Info on Lushly Products.
+                    {product.desc} ${product.price}
                     </Typography>
                   </CardContent>
                   <CardActions>

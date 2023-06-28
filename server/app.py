@@ -39,22 +39,6 @@ class Users(Resource):
         users_collection = [u for u in db.users.find()]
         return make_response(users_collection, 200)
 
-    def post(self):
-        data = request.get_json()
-
-        name = data.get('name')
-        email = data.get('email')
-
-        users_collection = db.users
-        user = {
-                '_id': str(ObjectId()),
-                'name': name,
-                'email': email
-            }
-
-        result = users_collection.insert_one(user)
-        return make_response(f'User added successfully. User ID: {result.inserted_id}', 201)
-
 class UserByID(Resource):
     def get(self, user_id):
         user = db.users.find_one({"_id": user_id})
@@ -84,13 +68,35 @@ class UserByID(Resource):
         else:
             return make_response({'message': 'User either not Found or was deleted, please try again'}, 404)
 
+class SignUp(Resource):
+    def post(self):
+        data = request.get_json()
 
+        f_name = data.get('f_name')
+        l_name = data.get('l_name')
+        email = data.get('email')
+        password = data.get('password')
+
+        hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
+
+        users_collection = db.users
+        user = {
+                '_id': str(ObjectId()),
+                'f_name': f_name,
+                'l_name': l_name,
+                'email': email,
+                '_password': hashed_pw,
+            }
+
+        result = users_collection.insert_one(user)
+        return make_response(f'User added successfully. User ID: {result.inserted_id}', 201)
 
 
 # ----------------------------------- ROUTES ------------------------------- #
 api.add_resource(HomePage, '/')
 api.add_resource(Users, '/users')
 api.add_resource(UserByID, '/users/<string:user_id>')
+api.add_resource(SignUp, '/signup', endpoint='/signup')
 
 if __name__ == '__main__':
     app.run(debug=True)

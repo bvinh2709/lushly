@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Toolbar from '@mui/material/Toolbar';
-import HomeIcon from '@mui/icons-material/Home';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from '@mui/icons-material/Home'
+import AppBar from '@mui/material/AppBar'
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,13 +19,24 @@ import Typography from '@mui/material/Typography';
 function Login() {
   return (
     <>
-     <Toolbar>
-        <Button>
-          <Link to='/'>
-            <HomeIcon sx={{ mr: 2 }} />
-          </Link>
-        </Button>
-      </Toolbar>
+      <AppBar
+          position="static"
+          color="default"
+          elevation={0}
+          sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
+        >
+          <Toolbar sx={{ flexWrap: 'wrap' }}>
+            <Button><Link to='/'><HomeIcon/></Link></Button>
+            <Typography  className='text-green-600' variant="h6" noWrap sx={{ flexGrow: 1 }}>
+              Lushly
+            </Typography>
+            <nav>
+              <Button><Link to='/products'>Products</Link></Button>
+              <Button><Link to='/signup'>Sign Up</Link></Button>
+              <Button><Link to='/checkout'><ShoppingCartIcon/></Link></Button>
+            </nav>
+          </Toolbar>
+        </AppBar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid

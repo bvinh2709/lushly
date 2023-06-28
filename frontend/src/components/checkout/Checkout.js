@@ -1,7 +1,6 @@
 import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
-import HomeIcon from '@mui/icons-material/Home';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import {Link} from 'react-router-dom'
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -48,23 +47,22 @@ function Checkout() {
 
   return (
     <>
-      <CssBaseline />
       <AppBar
-        position="absolute"
+        position="static"
         color="default"
         elevation={0}
-        sx={{
-          position: 'relative',
-          borderBottom: (t) => `1px solid ${t.palette.divider}`,
-        }}
+        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
       >
-        <Toolbar>
-          <Button>
-              <Link to='/'><HomeIcon/></Link>
-          </Button>
-          <Typography className='text-green-600' variant="h6" color="success.main" noWrap>
+        <Toolbar sx={{ flexWrap: 'wrap' }}>
+          <Typography  className='text-green-600' variant="h6" noWrap sx={{ flexGrow: 1 }}>
             Lushly
           </Typography>
+          <nav>
+            <Button><Link to='/products'>Products</Link></Button>
+            <Button><Link to='/login'>Login</Link></Button>
+            <Button><Link to='/signup'>Sign Up</Link></Button>
+            <Button><Link to='/checkout'><ShoppingCartIcon/></Link></Button>
+          </nav>
         </Toolbar>
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>

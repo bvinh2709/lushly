@@ -80,7 +80,7 @@ class UserByID(Resource):
         user = db.users.find_one({"_id": user_id})
         if user:
             db.users.delete_one(user)
-            return make_response(f'User with ID: {ObjectId(user_id)} has been deleted!', 204)
+            return make_response(f'This user has been deleted!', 204)
         else:
             return make_response({'message': 'User either not Found or was deleted, please try again'}, 404)
 

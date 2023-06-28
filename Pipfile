@@ -11,6 +11,8 @@ pymongo = "*"
 flask-cors = "*"
 flask-restful = "*"
 flask-bcrypt = "*"
+pyjwt = "*"
+flask-session = "*"
 
 [dev-packages]
 

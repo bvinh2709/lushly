@@ -4,12 +4,14 @@ import { Avatar, Toolbar, AppBar, Button, Box, Grid,
 import HomeIcon from '@mui/icons-material/Home'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import {Link} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { toast } from 'react-toastify'
 
 function Signup() {
+
+  const navigate = useNavigate()
 
   const formSchema = yup.object().shape({
     f_name: yup
@@ -36,7 +38,7 @@ function Signup() {
     },
     validationSchema: formSchema,
     onSubmit: (values) => {
-      fetch("http://localhost:5000/signup", {
+      fetch("/signup", {
         method: "POST",
         headers: {
           "Content-Type":"application/json",
@@ -48,6 +50,7 @@ function Signup() {
           toast.success('Welcome new user!', {
             autoClose: 2000,
           })
+          navigate('/login')
         } else {
           toast.error('Something is wrong!', {
             autoClose: 2000,
@@ -61,26 +64,6 @@ function Signup() {
   return (
 
     <>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-      >
-        <Toolbar sx={{ flexWrap: 'wrap' }}>
-          <Button><Link to='/'><HomeIcon/></Link></Button>
-          <Typography  className='text-green-600' variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            Lushly
-          </Typography>
-          <nav>
-            <Button><Link to='/products'>Products</Link></Button>
-            <Button><Link to='/login'>Login</Link></Button>
-            <Button><Link to='/checkout'><ShoppingCartIcon/></Link></Button>
-          </nav>
-        </Toolbar>
-      </AppBar>
-
-
       <Container component="main" maxWidth="xs">
         <CssBaseline />
 
@@ -98,7 +81,9 @@ function Signup() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate sx={{ mt: 3 }} onSubmit={formik.handleSubmit}>
+
+          <form onSubmit={formik.handleSubmit}>
+          <Box noValidate sx={{ mt: 3 }} >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -174,6 +159,7 @@ function Signup() {
               </Grid>
             </Grid>
           </Box>
+          </form>
         </Box>
       </Container>
     </>

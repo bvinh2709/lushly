@@ -1,16 +1,6 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import {Link} from 'react-router-dom'
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import { Box, Container, Paper, Stepper, Step, StepLabel,
+         Button, Typography } from '@mui/material';
 import AddressForm from './AddressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
@@ -47,24 +37,6 @@ function Checkout() {
 
   return (
     <>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-      >
-        <Toolbar sx={{ flexWrap: 'wrap' }}>
-          <Typography  className='text-green-600' variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            Lushly
-          </Typography>
-          <nav>
-            <Button><Link to='/products'>Products</Link></Button>
-            <Button><Link to='/login'>Login</Link></Button>
-            <Button><Link to='/signup'>Sign Up</Link></Button>
-            <Button><Link to='/checkout'><ShoppingCartIcon/></Link></Button>
-          </nav>
-        </Toolbar>
-      </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <Typography component="h1" variant="h4" align="center">
@@ -109,7 +81,7 @@ function Checkout() {
             </React.Fragment>
           )}
         </Paper>
-      </Container>  
+      </Container>
     </>
     );
 }

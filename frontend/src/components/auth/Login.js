@@ -1,42 +1,44 @@
-import * as React from 'react';
-import Toolbar from '@mui/material/Toolbar';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import HomeIcon from '@mui/icons-material/Home'
-import AppBar from '@mui/material/AppBar'
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import {Link} from 'react-router-dom';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import { useState } from 'react';
+import { Avatar, Button, CssBaseline, TextField,FormControlLabel, Checkbox,
+         Paper, Box, Grid, Typography  } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
+import { toast } from 'react-toastify'
 
-function Login() {
+function Login({handleLogin}) {
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate()
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+    }).then((r) => {
+        if (r.ok) {
+            r.json().then((user) => {
+                console.log(user)
+                handleLogin(user) })
+                navigate('/')
+                toast.success('Login Successfully!', {
+                  autoClose: 2000,
+                })
+        } else {
+          toast.error('Something is wrong!', {
+            autoClose: 2000,
+          })
+        }
+    })
+  }
+
+
   return (
     <>
-      <AppBar
-          position="static"
-          color="default"
-          elevation={0}
-          sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-        >
-          <Toolbar sx={{ flexWrap: 'wrap' }}>
-            <Button><Link to='/'><HomeIcon/></Link></Button>
-            <Typography  className='text-green-600' variant="h6" noWrap sx={{ flexGrow: 1 }}>
-              Lushly
-            </Typography>
-            <nav>
-              <Button><Link to='/products'>Products</Link></Button>
-              <Button><Link to='/signup'>Sign Up</Link></Button>
-              <Button><Link to='/checkout'><ShoppingCartIcon/></Link></Button>
-            </nav>
-          </Toolbar>
-        </AppBar>
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid
@@ -69,7 +71,9 @@ function Login() {
             <Typography component="h1" variant="h5">
               Login
             </Typography>
-            <Box component="form" noValidate sx={{ mt: 1 }}>
+
+            <form onSubmit={handleSubmit}>
+            <Box noValidate sx={{ mt: 1 }} >
               <TextField
                 margin="normal"
                 required
@@ -79,6 +83,8 @@ function Login() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
               <TextField
                 margin="normal"
@@ -89,6 +95,8 @@ function Login() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -110,6 +118,7 @@ function Login() {
                 </Grid>
               </Grid>
             </Box>
+            </form>
           </Box>
         </Grid>
       </Grid>

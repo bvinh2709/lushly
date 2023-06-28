@@ -1,47 +1,23 @@
 
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import HomeIcon from '@mui/icons-material/Home'
-import Card from '@mui/material/Card';
-import Toolbar from '@mui/material/Toolbar';
-import {Link} from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import { useEffect, useState } from 'react';
+import { Button, Card, CardActions, CardContent, CardMedia,
+         Grid, Box, Typography, Container }from '@mui/material';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import EditIcon from '@mui/icons-material/Edit';
-import AppBar from '@mui/material/AppBar'
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import lushly from './lushly.png'
-import CardMedia from '@mui/material/CardMedia';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album() {
+
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    fetch('/products')
+    .then(r=>r.json())
+    .then(productData => setProducts(productData))
+  }, [])
+
   return (
     <>
-      <AppBar
-        position="static"
-        color="default"
-        elevation={0}
-        sx={{ borderBottom: (theme) => `1px solid ${theme.palette.divider}` }}
-      >
-        <Toolbar sx={{ flexWrap: 'wrap' }}>
-          <Button><Link to='/'><HomeIcon/></Link></Button>
-          <Typography  className='text-green-600' variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            Lushly
-          </Typography>
-          <nav>
-            <Button><Link to='/products'>Products</Link></Button>
-            <Button><Link to='/login'>Login</Link></Button>
-            <Button><Link to='/signup'>Sign Up</Link></Button>
-            <Button><Link to='/checkout'><ShoppingCartIcon/></Link></Button>
-          </nav>
-        </Toolbar>
-      </AppBar>
       <main className='bg-slate-400'>
         {/* Hero unit */}
         <Box className='bg-white pt-2 pb-6'>
@@ -56,7 +32,7 @@ export default function Album() {
             >
               Lushly Products
             </Typography>
-            <Typography variant="h5" align="center" 
+            <Typography variant="h5" align="center"
             color="text.secondary" paragraph>
               Welcome to the Lushly Product Page
             </Typography>
@@ -65,8 +41,8 @@ export default function Album() {
         <Container sx={{ py: 8 }} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
+            {products.map((product) => (
+              <Grid item key={product} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -76,7 +52,7 @@ export default function Album() {
                       // 16:9
                       pt: '56.25%',
                     }} />
-                    <img alt='company' src={lushly} /> 
+                    <img alt='company' src={lushly} />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       Product

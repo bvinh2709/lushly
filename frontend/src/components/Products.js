@@ -42,7 +42,7 @@ export default function Album() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {products.map((product) => (
-              <Grid item key={product.name} xs={12} sm={6} md={4}>
+              <Grid item key={product._id} xs={12} sm={6} md={4}>
                 <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                 >
@@ -50,7 +50,7 @@ export default function Album() {
                     component="div"
                     sx={{
                       // 16:9
-                      pt: '56.25%',
+                      // pt: '56.25%',
                     }} />
                     <img alt='company' src={product.image} />
                   <CardContent sx={{ flexGrow: 1 }}>
@@ -58,13 +58,14 @@ export default function Album() {
                       {product.name}
                     </Typography>
                     <Typography>
-                    {product.desc} ${product.price}
+                    {product.desc}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Button size="small"><EditIcon/></Button>
+                  <CardActions sx={{ display:'flex', justifyContent:'space-between' }}>
+                    {/* <Button size="small"><EditIcon/></Button> */}
+                    <Box size="small">${product.price}</Box>
                     <Button size="extra small"><AddShoppingCartIcon/></Button>
-                    <Button></Button>
+                    {/* <Button></Button> */}
                   </CardActions>
                 </Card>
               </Grid>

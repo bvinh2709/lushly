@@ -140,6 +140,14 @@ class Products(Resource):
         products_collection = [p for p in db.products.find()]
         return make_response(products_collection, 200)
 
+    def delete(self):
+        result = db.products.delete_many({})
+
+        if result.deleted_count > 0:
+            return make_response('All products deleted', 204)
+        else:
+            return make_response('No products found', 404)
+
     def post(self):
         data = request.get_json()
 
@@ -161,14 +169,41 @@ class Products(Resource):
         result = products_collection.insert_one(product)
         return make_response(f'Item added successfully. Item ID: {result.inserted_id}', 201)
 
+class ProductByID(Resource):
+    def get(self, product_id):
+        product = db.products.find_one({"_id": product_id})
+        if product:
+            return make_response(product, 200)
+        else:
+            return make_response({'message': 'Product not Found, please try again'}, 404)
 
+    def patch(self, product_id):
+        product = db.products.find_one({"_id": product_id})
+        if product:
+            updated_data = request.get_json()
+
+            for key in updated_data.keys():
+                product[key] = updated_data[key]
+
+            db.products.update_one({"_id": product_id}, {"$set": product})
+            return make_response(f'Info of Product with ID: {ObjectId(product_id)} has been changed!', 201)
+        else:
+            return make_response({'message': 'Product not Found, please try again'}, 404)
+
+    def delete(self, product_id):
+        product = db.products.find_one({"_id": product_id})
+        if product:
+            db.products.delete_one(product)
+            return make_response(f'This product has been deleted!', 204)
+        else:
+            return make_response({'message': 'Product either not Found or was deleted, please try again'}, 404)
 
 # ----------------------------------- ROUTES ------------------------------- #
 api.add_resource(HomePage, '/')
 api.add_resource(Users, '/users')
 api.add_resource(UserByID, '/users/<string:user_id>')
 api.add_resource(Products, '/products')
-# api.add_resource(ProductByID, '/users/<string:product_id>')
+api.add_resource(ProductByID, '/products/<string:product_id>')
 api.add_resource(SignUp, '/signup', endpoint='signup')
 api.add_resource(Login, '/login', endpoint='login')
 api.add_resource(Logout, '/logout', endpoint='logout')
